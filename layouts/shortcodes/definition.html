@@ -1,0 +1,15 @@
+{{ $mainId := .Get "id" }}
+{{ $name := .Get "name" }}
+{{ with $captureName := .Get "type" }}
+  {{ with $.Inner }}
+    {{ $id := printf "%d" $.Ordinal }}
+    {{ $gent := dict "name" $name "id" $mainId "content" (string .) }}
+    {{ $.Page.Store.SetInMap $captureName $id $gent }}
+  {{ else }}
+    {{ errorf "The %s shortcode requires 'Inner' content. See %s" $.Name $.Position }}
+  {{ end }}
+{{ else }}
+  {{ errorf "The %s shortcode requires a single positional parameter. See %s" $.Name $.Position }}
+{{ end }}
+<p class="definition">{{ .Inner | markdownify }}</p>
+

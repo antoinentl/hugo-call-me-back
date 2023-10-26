@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+  <h2>Table of Content</h2>
+{{ $chapters := where .Site.Pages "Section" "chapters" }}
+{{ range sort $chapters ".Params.chapter" }}
+  <ul>
+    {{ range sort .Sections ".Params.chapter" }}
+    <li><a href="{{ .Permalink }}">{{ .Title }}</a></li>
+    {{ end }}
+  </ul>
+{{ end }}
+  <h2>Definitions</h2>
+  <ul>
+  {{ range site.RegularPages.ByTitle }}
+  {{ $noop := .WordCount }}
+    {{ if .HasShortcode "definition" }}
+      {{ range .Store.GetSortedMapValues "definition" }}
+        <li id="{{ .id }}"><strong>{{ .name }}</strong>: {{ .content | markdownify }}</li>
+      {{ end }}
+    {{ end }}
+  {{ end }}
+  </ul>
+</body>
+</html>
