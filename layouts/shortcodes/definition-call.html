@@ -1,6 +1,0 @@
-{{ $valeur := .Get 0 }}
-{{ range site.RegularPages.ByTitle }}
-  {{ range .Store.GetSortedMapValues $valeur }}
-    <span id="{{ .id }}">(<em>definition</em>: {{ .content | markdownify }})</span>
-  {{ end }}
-{{ end }}

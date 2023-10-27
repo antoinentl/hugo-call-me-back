@@ -1,0 +1,6 @@
+{{ $value := .Get "identifier" }}
+{{ range site.RegularPages.ByTitle }}
+  {{ range .Store.GetSortedMapValues "definition" }}
+  {{ if eq .id $value }}<span id="{{ .id }}">(<em>definition</em>: {{ .content | markdownify }})</span>{{ end }}
+  {{ end }}
+{{ end }}
